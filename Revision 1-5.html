@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vocabulary Adventure · Interactive Worksheet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F4EFE2;
+      --paper: #FBF8F1;
+      --ink: #2E2A22;
+      --sailboat: #B9D0CE;
+      --lavender: #C6B9D6;
+      --wisteria: #6E7A4E;
+      --lemonade: #D3A62E;
+      --rust: #9C5B3C;
+      --peony: #D98BA0;
+      --mint: #D7E2CE;
+      --line: #DDD4BE;
+      --green: #5E8A3B;
+      --red: #C46A4E;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 14px 34px rgba(0, 0, 0, 0.08);
+      --radius: 1.25rem;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Karla', sans-serif;
+      line-height: 1.5;
+      padding: 2rem 1.5rem 4rem;
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ----- HEADER ----- */
+    .header {
+      background: radial-gradient(circle at 80% 20%, rgba(211, 166, 46, 0.08), transparent 50%),
+                  radial-gradient(circle at 10% 80%, rgba(110, 122, 78, 0.06), transparent 45%),
+                  var(--paper);
+      border-radius: var(--radius);
+      padding: 2.8rem 3rem;
+      margin-bottom: 2.5rem;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-md);
+    }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--rust);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .header h1 {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      line-height: 1.1;
+      margin-bottom: 0.6rem;
+      color: var(--ink);
+    }
+
+    .header p {
+      font-size: 1.05rem;
+      color: #4B4636;
+      max-width: 700px;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1.2rem;
+      font-size: 0.85rem;
+      color: #6B6552;
+      flex-wrap: wrap;
+    }
+
+    .meta-row span b {
+      color: var(--ink);
+    }
+
+    /* ----- TASK CARDS ----- */
+    .task {
+      background: var(--paper);
+      border-radius: var(--radius);
+      padding: 2rem 2.2rem;
+      margin-bottom: 2rem;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s ease;
+    }
+
+    .task:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .task-head {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .task-num {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 2.4rem;
+      color: var(--rust);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .task-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .instructions {
+      background: var(--paper);
+      border-left: 5px solid var(--wisteria);
+      padding: 1rem 1.4rem;
+      border-radius: 0.4rem;
+      font-size: 0.95rem;
+      margin-bottom: 1.8rem;
+      color: #3D3A30;
+      border-top: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .instructions ol,
+    .instructions ul {
+      margin: 0.4rem 0 0 1.2rem;
+    }
+
+    .instructions li {
+      margin-bottom: 0.25rem;
+    }
+
+    /* ----- SCENARIO BLOCKS ----- */
+    .scenario-group {
+      margin-bottom: 2.2rem;
+    }
+
+    .scenario-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .scenario-title {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--rust);
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .sentence {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.9rem;
+      font-size: 0.98rem;
+      line-height: 1.6;
+      flex-wrap: wrap;
+    }
+
+    .sentence input[type="text"] {
+      font-family: 'Karla', sans-serif;
+      font-size: 0.95rem;
+      border: 1px solid var(--line);
+      border-radius: 0.5rem;
+      padding: 0.45rem 0.8rem;
+      background: white;
+      color: var(--ink);
+      flex: 1;
+      min-width: 180px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .sentence input[type="text"]:focus {
+      outline: none;
+      border-color: var(--wisteria);
+      box-shadow: 0 0 0 3px rgba(110, 122, 78, 0.12);
+    }
+
+    .sentence input[type="text"].correct {
+      background: #F0F7EA;
+      border-color: var(--green);
+      color: #3E5A26;
+    }
+
+    .sentence input[type="text"].incorrect {
+      background: #FDF0EC;
+      border-color: var(--red);
+      color: #8A3E27;
+    }
+
+    /* ----- MATCHING GAME ----- */
+    .match-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .match-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .match-col-header {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6B6552;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .match-item {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 0.7rem;
+      padding: 0.7rem 1rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      user-select: none;
+    }
+
+    .match-item:hover {
+      border-color: var(--wisteria);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .match-item.selected {
+      border-color: var(--rust);
+      background: #FFF9F0;
+      box-shadow: 0 0 0 3px rgba(156, 91, 60, 0.1);
+    }
+
+    .match-item.matched {
+      background: #F4F7F0;
+      border-color: var(--green);
+      color: #3E5A26;
+      cursor: default;
+      opacity: 0.85;
+    }
+
+    .match-item.matched .match-badge {
+      background: var(--green);
+      color: white;
+    }
+
+    .match-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--line);
+      color: var(--ink);
+      flex-shrink: 0;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .match-item.selected .match-badge {
+      background: var(--rust);
+      color: white;
+    }
+
+    .match-right {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .match-right .match-item {
+      cursor: pointer;
+    }
+
+    .match-right .match-item.matched {
+      cursor: default;
+    }
+
+    /* ----- FILL-IN MONOLOGUES ----- */
+    .monologue {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 0.9rem;
+      padding: 1.4rem 1.6rem;
+      margin-bottom: 1.4rem;
+      font-size: 0.98rem;
+      line-height: 1.8;
+    }
+
+    .monologue:last-child {
+      margin-bottom: 0;
+    }
+
+    .monologue-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--rust);
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+
+    .blank {
+      font-family: 'Karla', sans-serif;
+      font-size: 0.95rem;
+      border: none;
+      border-bottom: 2px solid var(--line);
+      background: transparent;
+      color: var(--rust);
+      font-weight: 600;
+      padding: 0 0.2rem 0.1rem;
+      width: 160px;
+      transition: border-color 0.15s, background 0.15s;
+      text-align: center;
+    }
+
+    .blank:focus {
+      outline: none;
+      border-bottom-color: var(--wisteria);
+      background: rgba(110, 122, 78, 0.04);
+    }
+
+    .blank.correct {
+      border-bottom-color: var(--green);
+      color: #3E5A26;
+      background: #F0F7EA;
+    }
+
+    .blank.incorrect {
+      border-bottom-color: var(--red);
+      color: #8A3E27;
+      background: #FDF0EC;
+    }
+
+    /* ----- CHECK BUTTONS ----- */
+    .check-row {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 1.2rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .check-btn {
+      font-family: 'Karla', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 0.6rem 1.4rem;
+      border-radius: 2rem;
+      border: 2px solid var(--rust);
+      background: transparent;
+      color: var(--rust);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .check-btn:hover {
+      background: var(--rust);
+      color: white;
+    }
+
+    .check-btn.secondary {
+      border-color: var(--line);
+      color: #6B6552;
+    }
+
+    .check-btn.secondary:hover {
+      background: var(--line);
+      color: var(--ink);
+    }
+
+    .score-badge {
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      background: var(--mint);
+      color: #3E5A26;
+      display: none;
+    }
+
+    .score-badge.show {
+      display: inline-block;
+    }
+
+    /* ----- FOOTER ----- */
+    .footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #8A8267;
+      margin-top: 3rem;
+      padding-bottom: 1rem;
+    }
+
+    /* ----- RESPONSIVE ----- */
+    @media (max-width: 800px) {
+      .match-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .header {
+        padding: 2rem 1.5rem;
+      }
+
+      .task {
+        padding: 1.5rem 1.2rem;
+      }
+
+      .sentence {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.3rem;
+      }
+
+      .sentence input[type="text"] {
+        width: 100%;
+      }
+
+      .blank {
+        width: 130px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      body {
+        padding: 1rem 0.8rem 3rem;
+      }
+
+      .header h1 {
+        font-size: 1.8rem;
+      }
+
+      .task-title {
+        font-size: 1.2rem;
+      }
+
+      .task-num {
+        font-size: 1.8rem;
+      }
+
+      .monologue {
+        padding: 1rem 1.1rem;
+        font-size: 0.9rem;
+      }
+
+      .blank {
+        width: 100px;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="eyebrow">Vocabulary Adventure · Interactive Worksheet</div>
+    <h1>Choose Your Adventure</h1>
+    <p>A three‑part vocabulary journey through time management, dream life, energy, dating, and the wisdom of women in their 30s.</p>
+    <div class="meta-row">
+      <span>Level: <b>B1–B2</b></span>
+      <span>Focus: <b>Vocabulary in context, matching, cloze</b></span>
+      <span>Format: <b>Interactive · Self‑check</b></span>
+    </div>
+  </header>
+
+  <!-- ===== EXERCISE 1 ===== -->
+  <section class="task" id="ex1">
+    <div class="task-head">
+      <span class="task-num">1</span>
+      <h2 class="task-title">The “Choose Your Adventure” Sentence Completion</h2>
+    </div>
+    <div class="instructions">
+      Read the short scenarios below. Choose the vocabulary word or phrase that best completes the sentence, fitting the context of the scenario.
+    </div>
+
+    <!-- Topic 1 -->
+    <div class="scenario-group">
+      <div class="scenario-title">⏰ Topic 1 · Time Management</div>
+      <div class="sentence">Even though I have a strict schedule, I tend to <input type="text" placeholder="type here…" data-answer="get off track"> when I start scrolling on social media.</div>
+      <div class="sentence">To avoid <input type="text" placeholder="type here…" data-answer="decision fatigue">, I try to make important decisions in the morning when my mind is fresh.</div>
+      <div class="sentence">My morning workout is <input type="text" placeholder="type here…" data-answer="non-negotiable">; if I skip it, my whole day feels off.</div>
+      <div class="sentence">To <input type="text" placeholder="type here…" data-answer="set yourself up for success"> for a productive week, I plan all my meals and outfits on Sunday.</div>
+    </div>
+
+    <!-- Topic 2 -->
+    <div class="scenario-group">
+      <div class="scenario-title">🌟 Topic 2 · Dream Life</div>
+      <div class="sentence">To build a successful business, you first need to <input type="text" placeholder="type here…" data-answer="make a commitment"> to the long, hard hours it will require.</div>
+      <div class="sentence">Becoming a(n) <input type="text" placeholder="type here…" data-answer="entrepreneur"> means accepting that you are the one ultimately responsible for your own success or failure.</div>
+      <div class="sentence">His idea was so unique that he decided to <input type="text" placeholder="type here…" data-answer="go against the grain"> and do something completely different from his industry peers.</div>
+      <div class="sentence">The path to success isn’t a straight line; expect many <input type="text" placeholder="type here…" data-answer="twists and turns"> along the way.</div>
+    </div>
+
+    <!-- Topic 3 -->
+    <div class="scenario-group">
+      <div class="scenario-title">⚡ Topic 3 · Energy</div>
+      <div class="sentence">Dealing with constant negativity at work can really <input type="text" placeholder="type here…" data-answer="drain energy">.</div>
+      <div class="sentence">After pulling two all-nighters in a row, I was completely <input type="text" placeholder="type here…" data-answer="listless"> and couldn’t focus on anything.</div>
+      <div class="sentence">I’ve been feeling so tired and apathetic lately; it’s like a kind of <input type="text" placeholder="type here…" data-answer="finite supply">.</div>
+      <div class="sentence">The first step to feeling better is to <input type="text" placeholder="type here…" data-answer="acknowledge emotions"> that you are stressed and need a break.</div>
+    </div>
+
+    <!-- Topic 4 -->
+    <div class="scenario-group">
+      <div class="scenario-title">💕 Topic 4 · Dating</div>
+      <div class="sentence">My friend set me up on a date, so I knew it was a high-quality <input type="text" placeholder="type here…" data-answer="referral">.</div>
+      <div class="sentence">It’s a good idea to <input type="text" placeholder="type here…" data-answer="suss out"> a potential partner’s values early on to see if you’re compatible.</div>
+      <div class="sentence">I prefer a more traditional <input type="text" placeholder="type here…" data-answer="courtship"> over just swiping on apps all day.</div>
+      <div class="sentence">She was honest and <input type="text" placeholder="type here…" data-answer="upfront"> about wanting a serious relationship from the very first date.</div>
+    </div>
+
+    <!-- Topic 5 -->
+    <div class="scenario-group">
+      <div class="scenario-title">👩 Topic 5 · Women in Their 30s</div>
+      <div class="sentence">After years of dating, she was tired of having to <input type="text" placeholder="type here…" data-answer="put up with a lot of bullshit"> from men who weren’t serious.</div>
+      <div class="sentence">He was so wonderful and committed that she knew he was the kind of man who would eventually <input type="text" placeholder="type here…" data-answer="wife you up">.</div>
+      <div class="sentence">Her experience taught her that while not every relationship is perfect, <input type="text" placeholder="type here…" data-answer="most women turn out okay">.</div>
+      <div class="sentence">Her sudden decision to move to a new city came completely <input type="text" placeholder="type here…" data-answer="out of the blue">; nobody saw it coming.</div>
+    </div>
+
+    <div class="check-row">
+      <button class="check-btn" onclick="checkExercise1()">✅ Check My Answers</button>
+      <button class="check-btn secondary" onclick="resetExercise1()">↺ Reset</button>
+      <span class="score-badge" id="score1"></span>
+    </div>
+  </section>
+
+  <!-- ===== EXERCISE 2 ===== -->
+  <section class="task" id="ex2">
+    <div class="task-head">
+      <span class="task-num">2</span>
+      <h2 class="task-title">The “Word Match-Up” Challenge</h2>
+    </div>
+    <div class="instructions">
+      Match the vocabulary word on the left with its best “vibe” or associated phrase on the right. Click a word from the left column, then click its match on the right.
+    </div>
+
+    <div class="match-grid" id="matchGrid">
+      <!-- Left column: vocabulary -->
+      <div class="match-col" id="leftCol">
+        <div class="match-col-header">Vocabulary</div>
+        <div class="match-item" data-term="day in and day out" data-id="1"><span class="match-badge">1</span> day in and day out</div>
+        <div class="match-item" data-term="agenda" data-id="2"><span class="match-badge">2</span> agenda</div>
+        <div class="match-item" data-term="decision fatigue" data-id="3"><span class="match-badge">3</span> decision fatigue</div>
+        <div class="match-item" data-term="set yourself up for success" data-id="4"><span class="match-badge">4</span> set yourself up for success</div>
+        <div class="match-item" data-term="break down" data-id="5"><span class="match-badge">5</span> break down</div>
+        <div class="match-item" data-term="tinker with" data-id="6"><span class="match-badge">6</span> tinker with</div>
+        <div class="match-item" data-term="hit a roadblock" data-id="7"><span class="match-badge">7</span> hit a roadblock</div>
+        <div class="match-item" data-term="formula" data-id="8"><span class="match-badge">8</span> formula</div>
+        <div class="match-item" data-term="finite supply" data-id="9"><span class="match-badge">9</span> finite supply</div>
+        <div class="match-item" data-term="hurdle" data-id="10"><span class="match-badge">10</span> hurdle</div>
+        <div class="match-item" data-term="hit the ground running" data-id="11"><span class="match-badge">11</span> hit the ground running</div>
+        <div class="match-item" data-term="listless" data-id="12"><span class="match-badge">12</span> listless</div>
+        <div class="match-item" data-term="hook up" data-id="13"><span class="match-badge">13</span> hook up</div>
+        <div class="match-item" data-term="suss out" data-id="14"><span class="match-badge">14</span> suss out</div>
+        <div class="match-item" data-term="the kicker" data-id="15"><span class="match-badge">15</span> the kicker</div>
+        <div class="match-item" data-term="gold digger" data-id="16"><span class="match-badge">16</span> gold digger</div>
+        <div class="match-item" data-term="default mode" data-id="17"><span class="match-badge">17</span> default mode</div>
+        <div class="match-item" data-term="unhealed wounding" data-id="18"><span class="match-badge">18</span> unhealed wounding</div>
+        <div class="match-item" data-term="out of the blue" data-id="19"><span class="match-badge">19</span> out of the blue</div>
+        <div class="match-item" data-term="hustle" data-id="20"><span class="match-badge">20</span> hustle</div>
+      </div>
+
+      <!-- Right column: definitions / vibes -->
+      <div class="match-col match-right" id="rightCol">
+        <div class="match-col-header">Vibe / Meaning</div>
+        <div class="match-item" data-def="The price of making too many choices." data-id="3"><span class="match-badge">A</span> The price of making too many choices.</div>
+        <div class="match-item" data-def="To prepare for a win." data-id="4"><span class="match-badge">B</span> To prepare for a win.</div>
+        <div class="match-item" data-def="The routine, the grind." data-id="1"><span class="match-badge">C</span> The routine, the grind.</div>
+        <div class="match-item" data-def="A list of what needs to get done today." data-id="2"><span class="match-badge">D</span> A list of what needs to get done today.</div>
+        <div class="match-item" data-def="To make small improvements." data-id="6"><span class="match-badge">E</span> To make small improvements.</div>
+        <div class="match-item" data-def="A setback that tests your resolve." data-id="7"><span class="match-badge">F</span> A setback that tests your resolve.</div>
+        <div class="match-item" data-def="A proven plan for reaching a goal." data-id="8"><span class="match-badge">G</span> A proven plan for reaching a goal.</div>
+        <div class="match-item" data-def="To analyze something by separating it into parts." data-id="5"><span class="match-badge">H</span> To analyze something by separating it into parts.</div>
+        <div class="match-item" data-def="To start a project with incredible energy." data-id="11"><span class="match-badge">I</span> To start a project with incredible energy.</div>
+        <div class="match-item" data-def="A feeling of laziness and lack of motivation." data-id="12"><span class="match-badge">J</span> A feeling of laziness and lack of motivation.</div>
+        <div class="match-item" data-def="An obstacle that can be overcome." data-id="10"><span class="match-badge">K</span> An obstacle that can be overcome.</div>
+        <div class="match-item" data-def="Energy that is limited and will run out." data-id="9"><span class="match-badge">L</span> Energy that is limited and will run out.</div>
+        <div class="match-item" data-def="The best part of a story or deal." data-id="15"><span class="match-badge">M</span> The best part of a story or deal.</div>
+        <div class="match-item" data-def="To have a sexual encounter, often casual." data-id="13"><span class="match-badge">N</span> To have a sexual encounter, often casual.</div>
+        <div class="match-item" data-def="Someone only interested in your money." data-id="16"><span class="match-badge">O</span> Someone only interested in your money.</div>
+        <div class="match-item" data-def="To figure out or investigate." data-id="14"><span class="match-badge">P</span> To figure out or investigate.</div>
+        <div class="match-item" data-def="A surprising thing that happens out of nowhere." data-id="19"><span class="match-badge">Q</span> A surprising thing that happens out of nowhere.</div>
+        <div class="match-item" data-def="To work very hard, often with little rest." data-id="20"><span class="match-badge">R</span> To work very hard, often with little rest.</div>
+        <div class="match-item" data-def="The automatic state or condition you revert to." data-id="17"><span class="match-badge">S</span> The automatic state or condition you revert to.</div>
+        <div class="match-item" data-def="Past trauma that still affects you." data-id="18"><span class="match-badge">T</span> Past trauma that still affects you.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem; font-size:0.9rem; color:#6B6552;" id="matchFeedback">
+      Click a term on the left, then click its matching vibe on the right.
+    </div>
+
+    <div class="check-row">
+      <button class="check-btn secondary" onclick="resetExercise2()">↺ Reset Matching Game</button>
+      <span class="score-badge" id="score2"></span>
+    </div>
+  </section>
+
+  <!-- ===== EXERCISE 3 ===== -->
+  <section class="task" id="ex3">
+    <div class="task-head">
+      <span class="task-num">3</span>
+      <h2 class="task-title">The “Vocab in the Wild” Challenge</h2>
+    </div>
+    <div class="instructions">
+      Read the short, informal monologue. Fill in the blanks with the most fitting vocabulary word or phrase from your lists.
+    </div>
+
+    <!-- Energy -->
+    <div class="monologue">
+      <div class="monologue-label">⚡ Energy</div>
+      “I feel so <input class="blank" type="text" placeholder="…" data-answer="listless"> today. I just can’t seem to focus on anything, and my brain feels like it’s full of fog. This must be what they call <input class="blank" type="text" placeholder="…" data-answer="brain fog">. I need to find a way to <input class="blank" type="text" placeholder="…" data-answer="get back on track"> and focus on my tasks.”
+    </div>
+
+    <!-- Dating -->
+    <div class="monologue">
+      <div class="monologue-label">💕 Dating</div>
+      “Dating is so weird now. I miss the old days of <input class="blank" type="text" placeholder="…" data-answer="courtship">, where you’d actually get to know someone. My friend gave me a great <input class="blank" type="text" placeholder="…" data-answer="referral">, but before I meet him, I need to <input class="blank" type="text" placeholder="…" data-answer="suss out"> his sense of humor. Is he funny? <input class="blank" type="text" placeholder="…" data-answer="Ultimately">, that’s a deal-breaker for me. The <input class="blank" type="text" placeholder="…" data-answer="kicker"> is that he’s a huge fan of the same obscure band as me, which is cool.”
+    </div>
+
+    <!-- Dream Life & Women in Their 30s -->
+    <div class="monologue">
+      <div class="monologue-label">🌟 Dream Life &amp; Women in Their 30s</div>
+      “My sister has always been a(n) <input class="blank" type="text" placeholder="…" data-answer="entrepreneur">, working for herself. She had to <input class="blank" type="text" placeholder="…" data-answer="break down"> a lot of barriers, and she still has to <input class="blank" type="text" placeholder="…" data-answer="tinker with"> her business model to make it perfect. Her advice to me was to make a real <input class="blank" type="text" placeholder="…" data-answer="commitment"> to my own goals and stop living in <input class="blank" type="text" placeholder="…" data-answer="default"> mode. She said, ‘In your 30s, you realize you don’t have to <input class="blank" type="text" placeholder="…" data-answer="jive with"> what others expect. You can finally fix your <input class="blank" type="text" placeholder="…" data-answer="unhealed wounding"> and build a life you love, even if it comes <input class="blank" type="text" placeholder="…" data-answer="out of the blue">.’”
+    </div>
+
+    <!-- Time Management -->
+    <div class="monologue">
+      <div class="monologue-label">⏰ Time Management</div>
+      “My schedule is packed. I have a meeting every hour on my <input class="blank" type="text" placeholder="…" data-answer="agenda">. To <input class="blank" type="text" placeholder="…" data-answer="set yourself up for success">, I’ve made it a <input class="blank" type="text" placeholder="…" data-answer="non-negotiable"> rule not to check emails after 6 PM. I need to <input class="blank" type="text" placeholder="…" data-answer="keep up with"> my deadlines, and I try to do this <input class="blank" type="text" placeholder="…" data-answer="day in and day out">.”
+    </div>
+
+    <div class="check-row">
+      <button class="check-btn" onclick="checkExercise3()">✅ Check My Answers</button>
+      <button class="check-btn secondary" onclick="resetExercise3()">↺ Reset</button>
+      <span class="score-badge" id="score3"></span>
+    </div>
+  </section>
+
+  <!-- ===== EXERCISE 4 · BONUS DIALOGUE ===== -->
+  <section class="task" id="ex4">
+    <div class="task-head">
+      <span class="task-num">4</span>
+      <h2 class="task-title">Bonus · Dialogue Gap-Fill</h2>
+    </div>
+    <div class="instructions">
+      Two friends are catching up. Fill in the blanks using the vocabulary from the previous exercises.
+    </div>
+
+    <div class="monologue">
+      <div class="monologue-label">☕ Coffee Catch-Up</div>
+      <p style="margin-bottom:0.6rem;">
+        <strong>Maya:</strong> “You look tired. Are you okay?”
+      </p>
+      <p style="margin-bottom:0.6rem;">
+        <strong>Leo:</strong> “Honestly, I’ve been feeling pretty <input class="blank" type="text" placeholder="…" data-answer="listless"> lately. Work has been such a <input class="blank" type="text" placeholder="…" data-answer="hustle">, and I just can’t seem to
